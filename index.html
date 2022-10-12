@@ -5,39 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
+    <script src="main.js" defer></script>
     <title>Calculator</title>
 </head>
 <body>
 <div class="page">   
     <h1>Web Calculator</h1>
     <div class="calculator">
-        <div id="answer">34524</div>
+        <div id="answer">0</div>
             <div class="logicBtn">
                 <div class="number-container">
-                    <input type="button" id="num" class="clearBtn" value="Clear">
-                    <input type="button" id="num" value="7">
-                    <input type="button" id="num" value="8">
-                    <input type="button" id="num" value="9">
-                    <input type="button" id="num" value="4">
-                    <input type="button" id="num" value="5">
-                    <input type="button" id="num" value="6">
-                    <input type="button" id="num" value="1">
-                    <input type="button" id="num" value="2">
-                    <input type="button" id="num" value="3">
-                    <input type="button" id="num" class="num0"  value="0">
-                    <input type="button" id="period" value=".">
+                    <button id="clearBtn">Clear</button>
+                    <button class="num" value="7" >7</button>
+                    <button class="num" value="8">8</button>
+                    <button class="num" value="9">9</button>
+                    <button class="num" value="4">4</button>
+                    <button class="num" value="5">5</button>
+                    <button class="num" value="6">6</button>
+                    <button class="num" value="1">1</button>
+                    <button class="num" value="2">2</button>
+                    <button class="num" value="3">3</button>
+                    <button class="num" id="num0" value="0" >0</button>
+                    <button id="period" class="decimal" value=".">.</button>
                 </div>
                 <div class="mathOperators">
-                    <input type="button" class="symbol" id="equal" value="=">
-                    <input type="button" class="symbol" id="add" value="+">
-                    <input type="button" class="symbol" id="subtract" value="-">
-                    <input type="button" class="symbol" id="add" value="x">
-                    <input type="button" class="symbol" id="add" value="÷">
-                </div>    
+                    <button id="equal" value="=">=</button>
+                    <button class="symbol" id="add" value="+">+</button>
+                    <button class="symbol" id="subtract" value="-">-</button>
+                    <button class="symbol" id="multiply" value="x">x</button>
+                    <button class="symbol" id="divide" value="÷">÷</button>
+                </div>   
             </div>
     </div>
 
 </div> 
-<script src="main.js"></script>
+
 </body>
 </html>

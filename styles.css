@@ -1,7 +1,9 @@
 html{ background-color: #000000;}
 
-h1{
+#answer{
     color: #F7F7F7;
+    background-color: #000000;
+    border-color: transparent;
 }
 
 .page{
@@ -39,7 +41,7 @@ h1{
     align-items: center;
     justify-content: center;
 }
-#num, #period{
+.num, #period{
     background-color: #303130;
     border-radius: 25px;
     padding: 10px;
@@ -49,13 +51,18 @@ h1{
     color: #F7F7F7;
     border-color: transparent;
 }
-#num.num0{
+.num#num0{
     width: 110px;
     text-align: left;
 }
-#num.clearBtn{
+#clearBtn{
     width: 170px;
     border-radius: 20px;
+    padding: 10px;
+    font-size: 25px;
+    background-color: #303130;
+    color: #F7F7F7;
+    border-color: transparent;
 }
 .mathOperators{
     display: flex;
@@ -66,7 +73,7 @@ h1{
     gap: 10px;
 }
 
-.symbol{
+.symbol, #equal{
     background-color: #F69906;
     color: #F7F7F7;
     font-size: 30px;
@@ -75,4 +82,8 @@ h1{
     border-radius: 25px;
     padding: 10px;
     border: transparent;
+}
+/*.symbol{
+    color: #F69906;
+    background-color: #F7F7F7;
 }
