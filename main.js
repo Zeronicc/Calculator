@@ -8,12 +8,17 @@ const clearBtn = document.querySelector("#clearBtn");
 let resettingScreen = false;
 let num1 = 0;
 let num2 = 0;
+let equalClick = 0;
+let operatorClick = 0;
 let operatorSign = '';
 let signBtn = '';
 
 numKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
+    if(target.value === '.' && answer.textContent.indexOf('.') !== -1){
+        return
+    }
     screenDisplay(target.value);
     if(!signBtn == ''){
     signBtn.style.backgroundColor ='#F69906';
@@ -25,20 +30,30 @@ numKeys.forEach((button) =>
 operateKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
-    if(operatorSign !== '') ;
+    
     num1 = answer.textContent;
     button.style.backgroundColor = '#F7F7F7';
     button.style.color = '#F69906';
     operatorSign = button.textContent;
     signBtn = button;
     resettingScreen = true;
+    operatorClick += 1;
+    if(operatorClick > 1){
+        num2 = answer.textContent;
+        answer.textContent = roundResult(operate(operatorSign, num1, num2));
+        resettingScreen = true;
+        operatorClick = 0;
+
+    }
   })
 );
 
 equalBtn.addEventListener('click', event => {
     num2 = answer.textContent;
-    answer.textContent = operate(operatorSign, num1, num2);
-    
+    answer.textContent = roundResult(operate(operatorSign, num1, num2));
+    resettingScreen = true;
+    runAgain();
+    equalClick += 1;
 });
 
 clearBtn.addEventListener('click', () => clear());
@@ -47,7 +62,14 @@ function clear(){
     answer.textContent = 0;
     num1 = 0;
     num2 = 0;
+    equalClick = 0;
     operatorSign = '';
+}
+
+
+
+function roundResult(answer){
+    return Math.round( ( answer + Number.EPSILON ) * 100 ) / 100
 }
 
 function screenDisplay(value){
@@ -62,10 +84,21 @@ function resetScreen(){
     resettingScreen = false;
 };
 
+function runAgain(){
+    if(equalClick >= 1){
+        return 
+    }else if(num2 === 0){
+        return
+    }else{num1 = num2}
+    
+}
 function operate(operator, a, b){
     a = Number(a);
     b = Number(b);
-    if(operator === '+'){
+    if(operatorSign === ''){
+        a = b;
+        return a
+    }else if(operator === '+'){
         return a + b
     }else if(operator === '-'){
         return a - b
@@ -73,7 +106,11 @@ function operate(operator, a, b){
         return a * b
     }else if(operator === '÷' && (a === 0 || b === 0)){
         return "very funny -_-"
-    }else if(operator === '÷'){
+    }else if(operatorSign === '÷' && equalClick > 0){
+        return b/a
+    }if(operator === '÷'){
         return a/b
     }
+        
+    
 };
