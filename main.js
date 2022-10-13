@@ -5,7 +5,7 @@ const keys = document.querySelector(".logicBtn");
 const operateKeys = document.querySelectorAll(".symbol");
 const allClearBtn = document.querySelector("#allClearBtn");
 const numberContainer = document.querySelector(".number-container");
-const backSpace = document.querySelector("#allClearBtn");
+const backSpace = document.querySelector("#deleteBtn");
 const refreshBtn = document.querySelector(".refresh");
 const clearBtn = document.createElement("button");
 
@@ -65,15 +65,25 @@ equalBtn.addEventListener('click', event => {
     operatorClick = 0;
 });
 
-allClearBtn.addEventListener('click', () => allClear());
 clearBtn.addEventListener('click', () => {
     answer.textContent = '0';
     numberContainer.removeChild(clearBtn);
     numberContainer.prepend(allClearBtn);
     numClick = 0;
-})
+});
 
-refreshBtn.addEventListener('click', () => window.location.reload())
+allClearBtn.addEventListener('click', () => allClear());
+refreshBtn.addEventListener('click', () => window.location.reload());
+backSpace.addEventListener('click', () =>  {
+    if(answer.textContent == 0) return;
+    if(answer.textContent < 10){
+        deleteLast();
+        numberContainer.removeChild(clearBtn);
+        numberContainer.prepend(allClearBtn);
+        numClick = 0;
+        return answer.textContent = 0;
+    }
+    answer.textContent = deleteLast()});
 
 function clear(){
     if(numClick < 1){
@@ -81,8 +91,16 @@ function clear(){
         numberContainer.prepend(clearBtn);
     }
     numClick += 1    
-}
+};
 
+function deleteLast(){
+    if(answer.textContent === 0){
+        return
+    }else{
+       display = answer.textContent
+       return display.slice(0, -1)
+    }
+};
 
 function allClear(){
     answer.textContent = 0;
