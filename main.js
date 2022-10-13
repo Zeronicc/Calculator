@@ -4,9 +4,10 @@ const numKeys = document.querySelectorAll(".num");
 const keys = document.querySelector(".logicBtn");
 const operateKeys = document.querySelectorAll(".symbol");
 const allClearBtn = document.querySelector("#allClearBtn");
-const numberContainer = document.querySelector(".number-container")
-const backSpace = document.querySelector("#allClearBtn")
-const clearBtn = document.createElement("button")
+const numberContainer = document.querySelector(".number-container");
+const backSpace = document.querySelector("#allClearBtn");
+const refreshBtn = document.querySelector(".refresh");
+const clearBtn = document.createElement("button");
 
 
 let resettingScreen = false;
@@ -27,6 +28,8 @@ numKeys.forEach((button) =>
     if(target.value === '.' && (answer.textContent.indexOf('.') !== -1 || resettingScreen)){
         return
     }
+    word = answer.textContent;
+    if(word.length > 8) return;
     screenDisplay(target.value);
     revertColor();
     clear();
@@ -70,6 +73,8 @@ clearBtn.addEventListener('click', () => {
     numClick = 0;
 })
 
+refreshBtn.addEventListener('click', () => window.location.reload())
+
 function clear(){
     if(numClick < 1){
         numberContainer.removeChild(allClearBtn);
@@ -89,7 +94,7 @@ function allClear(){
 }
 
 function roundResult(answer){
-    return Math.round( ( answer + Number.EPSILON ) * 100 ) / 100
+    return Math.round( ( answer + Number.EPSILON ) * 1000 ) / 1000
 }
 
 function screenDisplay(value){

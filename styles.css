@@ -13,7 +13,7 @@ html{ background-color: #000000;}
 }
 
 .calculator{
-    width: 240px;
+    width: 275px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -24,7 +24,7 @@ html{ background-color: #000000;}
 #answer{
     color: #F7F7F7;
     text-align: right;
-    font-size: 50px;
+    font-size: 60px;
 }
 
 .logicBtn{
@@ -35,52 +35,53 @@ html{ background-color: #000000;}
 .number-container{
     display: flex;
     flex-wrap: wrap;
-    width: 190px;
-    height: 300px;
+    width: 220px;
+    height: auto;
     gap: 10px;
     align-items: center;
     justify-content: center;
     
 }
-.num:focus, #period:focus, #allClear:focus, #clearBtn:focus{
-    
+.num:focus, #period:focus, #allClearBtn:focus, #clearBtn:focus, .refresh:focus{
     background-color: #5f5f5f;
 }
 .num, #period{
     background-color: #303130;
-    border-radius: 25px;
+    border-radius: 30px;
     padding: 10px;
-    font-size: 25px;
-    width: 50px;
-    height: 50px;
+    font-size: 30px;
+    width: 60px;
+    height: 60px;
     color: #F7F7F7;
     border-color: transparent;
 }
 .num#num0{
-    width: 110px;
+    width: 130px;
     text-align: left;
 }
 #allClearBtn{
-    width: 110px;
-    border-radius: 20px;
+    width: 130px;
+    border-radius: 25px;
     padding: 8.5px;
-    font-size: 25px;
+    font-size: 30px;
     background-color: #303130;
     color: #F7F7F7;
     border-color: transparent;
+    height: 60px;
 }
 #clearBtn{
-    width: 110px;
-    border-radius: 20px;
+    width: 130px;
+    height: 60px;
+    border-radius: 25px;
     padding: 8.5px;
-    font-size: 25px;
+    font-size: 30px;
     background-color: #303130;
     color: #F7F7F7;
     border-color: transparent;
 }
 #deleteBtn{
-    width: 50px;
-    border-radius: 20px;
+    width: 60px;
+    border-radius: 25px;
     padding: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
@@ -88,12 +89,12 @@ html{ background-color: #000000;}
     background-color: #303130;
     color: #F7F7F7;
     border-color: transparent;
-    height: 50px;
+    height: 60px;
 }
 .mathOperators{
     display: flex;
     flex-wrap: wrap-reverse;
-    width: 50px;
+    width: 70px;
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -103,16 +104,27 @@ html{ background-color: #000000;}
     background-color: #F69906;
     color: #F7F7F7;
     font-size: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
     border: transparent;
 }#multiply{
     padding-bottom: 5px;
     padding-left: 6.5px;
-    font-size: 28px;
+    font-size: 30px;
 }
 #subtract{
     font-size: 39px;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
+}
+
+.refresh{
+    width: 155px;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #303130;
+    color: #F7F7F7;
+    border-color: transparent;
+    margin-top: 50px;
 }
