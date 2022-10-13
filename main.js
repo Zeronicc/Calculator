@@ -3,7 +3,11 @@ const answer = document.querySelector("#answer")
 const numKeys = document.querySelectorAll(".num");
 const keys = document.querySelector(".logicBtn");
 const operateKeys = document.querySelectorAll(".symbol");
-const clearBtn = document.querySelector("#clearBtn");
+const allClearBtn = document.querySelector("#allClearBtn");
+const numberContainer = document.querySelector(".number-container")
+const backSpace = document.querySelector("#allClearBtn")
+const clearBtn = document.createElement("button")
+
 
 let resettingScreen = false;
 let num1 = 0;
@@ -12,6 +16,10 @@ let equalClick = 0;
 let operatorClick = 0;
 let operatorSign = '';
 let signBtn = '';
+let numClick = 0;
+
+clearBtn.id = 'clearBtn';
+clearBtn.textContent = 'C'
 
 numKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
@@ -20,10 +28,8 @@ numKeys.forEach((button) =>
         return
     }
     screenDisplay(target.value);
-    if(!signBtn == ''){
-    signBtn.style.backgroundColor ='#F69906';
-    signBtn.style.color = '#F7F7F7';
-    }
+    revertColor();
+    clear();
   })
 );
 
@@ -48,7 +54,6 @@ operateKeys.forEach((button) =>
 );
 
 equalBtn.addEventListener('click', event => {
-    
     num2 = answer.textContent;
     answer.textContent = roundResult(operate(operatorSign, num1, num2));
     resettingScreen = true;
@@ -57,9 +62,24 @@ equalBtn.addEventListener('click', event => {
     operatorClick = 0;
 });
 
-clearBtn.addEventListener('click', () => clear());
+allClearBtn.addEventListener('click', () => allClear());
+clearBtn.addEventListener('click', () => {
+    answer.textContent = '0';
+    numberContainer.removeChild(clearBtn);
+    numberContainer.prepend(allClearBtn);
+    numClick = 0;
+})
 
 function clear(){
+    if(numClick < 1){
+        numberContainer.removeChild(allClearBtn);
+        numberContainer.prepend(clearBtn);
+    }
+    numClick += 1    
+}
+
+
+function allClear(){
     answer.textContent = 0;
     num1 = 0;
     num2 = 0;
@@ -83,6 +103,7 @@ function resetScreen(){
     answer.textContent = '';
     resettingScreen = false;
 };
+
 //Makes it run again if equal sign is clicked again.
 function runAgain(){
     console.log(equalClick)
@@ -93,6 +114,12 @@ function runAgain(){
     }else{num1 = num2}
 }
 
+function revertColor(){
+    if(!signBtn == ''){
+        signBtn.style.backgroundColor ='#F69906';
+        signBtn.style.color = '#F7F7F7';
+        }
+}
 function operate(operator, a, b){
     a = Number(a);
     b = Number(b);

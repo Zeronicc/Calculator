@@ -40,6 +40,11 @@ html{ background-color: #000000;}
     gap: 10px;
     align-items: center;
     justify-content: center;
+    
+}
+.num:focus, #period:focus, #allClear:focus, #clearBtn:focus{
+    
+    background-color: #5f5f5f;
 }
 .num, #period{
     background-color: #303130;
@@ -55,14 +60,35 @@ html{ background-color: #000000;}
     width: 110px;
     text-align: left;
 }
-#clearBtn{
-    width: 170px;
+#allClearBtn{
+    width: 110px;
     border-radius: 20px;
     padding: 8.5px;
     font-size: 25px;
     background-color: #303130;
     color: #F7F7F7;
     border-color: transparent;
+}
+#clearBtn{
+    width: 110px;
+    border-radius: 20px;
+    padding: 8.5px;
+    font-size: 25px;
+    background-color: #303130;
+    color: #F7F7F7;
+    border-color: transparent;
+}
+#deleteBtn{
+    width: 50px;
+    border-radius: 20px;
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    font-size: 25px;
+    background-color: #303130;
+    color: #F7F7F7;
+    border-color: transparent;
+    height: 50px;
 }
 .mathOperators{
     display: flex;
@@ -80,10 +106,13 @@ html{ background-color: #000000;}
     width: 50px;
     height: 50px;
     border-radius: 25px;
-    padding: 10px;
     border: transparent;
+}#multiply{
+    padding-bottom: 5px;
+    padding-left: 6.5px;
+    font-size: 28px;
 }
-/*.symbol{
-    color: #F69906;
-    background-color: #F7F7F7;
+#subtract{
+    font-size: 39px;
+    padding-bottom: 10px;
 }
