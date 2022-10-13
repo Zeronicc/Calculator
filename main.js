@@ -16,7 +16,7 @@ let signBtn = '';
 numKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
-    if(target.value === '.' && answer.textContent.indexOf('.') !== -1){
+    if(target.value === '.' && (answer.textContent.indexOf('.') !== -1 || resettingScreen)){
         return
     }
     screenDisplay(target.value);
@@ -30,30 +30,31 @@ numKeys.forEach((button) =>
 operateKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
-    
+    operatorClick += 1;
+    if(operatorSign !== '' && operatorClick > 1){
+        num2 = answer.textContent;
+        answer.textContent = roundResult(operate(operatorSign, num1, num2));
+        resettingScreen = true;
+        equalClick = 0;
+    };
     num1 = answer.textContent;
     button.style.backgroundColor = '#F7F7F7';
     button.style.color = '#F69906';
     operatorSign = button.textContent;
     signBtn = button;
     resettingScreen = true;
-    operatorClick += 1;
-    if(operatorClick > 1){
-        num2 = answer.textContent;
-        answer.textContent = roundResult(operate(operatorSign, num1, num2));
-        resettingScreen = true;
-        operatorClick = 0;
-
-    }
+    equalClick = 0;
   })
 );
 
 equalBtn.addEventListener('click', event => {
+    
     num2 = answer.textContent;
     answer.textContent = roundResult(operate(operatorSign, num1, num2));
     resettingScreen = true;
     runAgain();
     equalClick += 1;
+    operatorClick = 0;
 });
 
 clearBtn.addEventListener('click', () => clear());
@@ -63,10 +64,9 @@ function clear(){
     num1 = 0;
     num2 = 0;
     equalClick = 0;
+    operatorClick = 0;
     operatorSign = '';
 }
-
-
 
 function roundResult(answer){
     return Math.round( ( answer + Number.EPSILON ) * 100 ) / 100
@@ -83,15 +83,16 @@ function resetScreen(){
     answer.textContent = '';
     resettingScreen = false;
 };
-
+//Makes it run again if equal sign is clicked again.
 function runAgain(){
+    console.log(equalClick)
     if(equalClick >= 1){
         return 
     }else if(num2 === 0){
         return
     }else{num1 = num2}
-    
 }
+
 function operate(operator, a, b){
     a = Number(a);
     b = Number(b);
@@ -110,7 +111,5 @@ function operate(operator, a, b){
         return b/a
     }if(operator === '÷'){
         return a/b
-    }
-        
-    
+    } 
 };
