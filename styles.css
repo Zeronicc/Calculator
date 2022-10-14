@@ -20,12 +20,14 @@ html{ background-color: #000000;}
     border: solid #F7F7F7 1px;
     border-radius: 10px;
     padding: 20px;
+    padding-top: 75px;
     height: 420px;
 }
 #answer{
     color: #F7F7F7;
     text-align: right;
     font-size: 60px;
+    height: 70px;
 }
 
 .logicBtn{
@@ -43,8 +45,11 @@ html{ background-color: #000000;}
     justify-content: center;
     
 }
-.num:focus, #period:focus, #allClearBtn:focus, #clearBtn:focus, .refresh:focus{
+.num:focus, #period:focus, .refresh:focus{
     background-color: #5f5f5f;
+}
+#allClearBtn:focus, #clearBtn:focus, #deleteBtn:focus, #addNegative:focus{
+    background-color: #F7F7F7;
 }
 .num, #period{
     background-color: #303130;
@@ -59,38 +64,23 @@ html{ background-color: #000000;}
 .num#num0{
     width: 130px;
     text-align: left;
+    padding-left: 20px;
 }
-#allClearBtn{
-    width: 130px;
-    border-radius: 25px;
-    padding: 8.5px;
-    font-size: 30px;
-    background-color: #303130;
-    color: #F7F7F7;
-    border-color: transparent;
-    height: 60px;
-}
-#clearBtn{
-    width: 130px;
-    height: 60px;
-    border-radius: 25px;
-    padding: 8.5px;
-    font-size: 30px;
-    background-color: #303130;
-    color: #F7F7F7;
-    border-color: transparent;
-}
-#deleteBtn{
+
+#deleteBtn, #addNegative, #allClearBtn, #clearBtn{
     width: 60px;
     border-radius: 25px;
     padding: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
     font-size: 25px;
-    background-color: #303130;
-    color: #F7F7F7;
+    background-color: #A5A5A5;
+    color: #000000;
     border-color: transparent;
     height: 60px;
+}
+#addNegative{
+    font-size: 24px;
 }
 .mathOperators{
     display: flex;
@@ -112,6 +102,7 @@ html{ background-color: #000000;}
     align-items: center;
     justify-content: center;
     display: flex;
+    font-weight: bold;
 }
 
 .refresh{

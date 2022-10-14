@@ -7,6 +7,7 @@ const allClearBtn = document.querySelector("#allClearBtn");
 const numberContainer = document.querySelector(".number-container");
 const backSpace = document.querySelector("#deleteBtn");
 const refreshBtn = document.querySelector(".refresh");
+const addNeg = document.querySelector("#addNegative");
 const clearBtn = document.createElement("button");
 
 
@@ -25,31 +26,38 @@ clearBtn.textContent = 'C'
 numKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
-    if(target.value === '.' && (answer.textContent.indexOf('.') !== -1 || resettingScreen)){
-        return
-    }
     word = answer.textContent;
-    if(word.length > 8) return;
+    if(word.length > 8 && resettingScreen !== true) return;
+    if(target.value === ".") return decimalPlace(target.value);
+    if(answer.textContent == '-0'){answer.textContent = "-"}
     screenDisplay(target.value);
     revertColor();
-    clear();
+    showClear();
   })
 );
 
 operateKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
+    button.style.backgroundColor = '#F7F7F7';
+    button.style.color = '#F69906';
+    if(answer.textContent === "Error") return;
     operatorClick += 1;
     if(operatorSign !== '' && operatorClick > 1){
         num2 = answer.textContent;
         answer.textContent = roundResult(operate(operatorSign, num1, num2));
         resettingScreen = true;
         equalClick = 0;
+        result = roundResult(operate(operatorSign, num1, num2));
+        result = result.toString()
+        if(result.length > 9){
+            answer.textContent = "Error";
+            return answer.textContent
+        };
     };
     num1 = answer.textContent;
-    button.style.backgroundColor = '#F7F7F7';
-    button.style.color = '#F69906';
-    operatorSign = button.textContent;
+    revertColor();
+    operatorSign = target.value;
     signBtn = button;
     resettingScreen = true;
     equalClick = 0;
@@ -57,12 +65,22 @@ operateKeys.forEach((button) =>
 );
 
 equalBtn.addEventListener('click', event => {
+    equalBtn.style.backgroundColor = '#F7F7F7';
+    equalBtn.style.color = '#F69906';
     num2 = answer.textContent;
+    result = roundResult(operate(operatorSign, num1, num2));
+    result = result.toString()
+    if(result.length > 9){
+        answer.textContent = "Error";
+        return answer.textContent
+    };
     answer.textContent = roundResult(operate(operatorSign, num1, num2));
     resettingScreen = true;
     runAgain();
+    revertColor();
     equalClick += 1;
     operatorClick = 0;
+    signBtn = equalBtn
 });
 
 clearBtn.addEventListener('click', () => {
@@ -72,20 +90,29 @@ clearBtn.addEventListener('click', () => {
     numClick = 0;
 });
 
-allClearBtn.addEventListener('click', () => allClear());
-refreshBtn.addEventListener('click', () => window.location.reload());
+
 backSpace.addEventListener('click', () =>  {
-    if(answer.textContent == 0) return;
-    if(answer.textContent < 10){
+    display = answer.textContent
+    if(answer.textContent === "0" || answer.textContent === "-0") return;
+    if(display.length === 1){
         deleteLast();
         numberContainer.removeChild(clearBtn);
         numberContainer.prepend(allClearBtn);
         numClick = 0;
         return answer.textContent = 0;
-    }
-    answer.textContent = deleteLast()});
+    }else if(answer.textContent == '-'){
 
-function clear(){
+        return answer.textContent = 0
+    }
+    return answer.textContent = deleteLast();
+});
+
+allClearBtn.addEventListener('click', () => allClear());
+refreshBtn.addEventListener('click', () => window.location.reload());
+addNeg.addEventListener('click', () => plusMinus());
+
+function showClear(){
+    if(answer.textContent === "0") return;
     if(numClick < 1){
         numberContainer.removeChild(allClearBtn);
         numberContainer.prepend(clearBtn);
@@ -112,11 +139,36 @@ function allClear(){
     operatorSign = '';
 }
 
-function roundResult(answer){
-    return Math.round( ( answer + Number.EPSILON ) * 1000 ) / 1000
+function plusMinus(){
+    if(answer.textContent === "0"){
+        return answer.textContent = "-0"
+    }else if(answer.textContent === "-0"){
+        return answer.textContent = "0"
+    }else if(answer.textContent.indexOf('-') !== -1){
+        answer.textContent = answer.textContent * -1
+    }else{answer.textContent = answer.textContent * -1}
 }
 
+function decimalPlace(decimal){
+    if(operatorClick > 0 && resettingScreen){
+        revertColor();
+        resettingScreen = false
+        return answer.textContent = "0."
+    }else if(answer.textContent.indexOf('.') !== -1 || resettingScreen){
+        return
+    }else if(answer.textContent === "0"){
+        return answer.textContent = "0."
+    }else{answer.textContent += decimal}
+    
+};
+
+function roundResult(answer){
+    if(answer !== NaN)return answer;
+    return Math.round( ( answer + Number.EPSILON ) * 10000 ) / 10000
+};
+
 function screenDisplay(value){
+    if(answer.textContent === "0.") return answer.textContent += value;
     if(answer.textContent === '0' || resettingScreen){
         resetScreen();
     }
@@ -136,17 +188,17 @@ function runAgain(){
     }else if(num2 === 0){
         return
     }else{num1 = num2}
-}
+};
 
 function revertColor(){
-    if(!signBtn == ''){
+    if(!signBtn.textContent == ''){
         signBtn.style.backgroundColor ='#F69906';
         signBtn.style.color = '#F7F7F7';
         }
-}
+};
 function operate(operator, a, b){
-    a = Number(a);
-    b = Number(b);
+    +a;
+    +b;
     if(operatorSign === ''){
         a = b;
         return a
@@ -156,11 +208,11 @@ function operate(operator, a, b){
         return a - b
     }else if(operator === 'x'){
         return a * b
-    }else if(operator === '÷' && (a === 0 || b === 0)){
-        return "very funny -_-"
+    }else if(operator === '÷' && a == 0 || b == 0){
+        return "wow ಠ_ಠ"
     }else if(operatorSign === '÷' && equalClick > 0){
         return b/a
-    }if(operator === '÷'){
+    }else if(operator === '÷'){
         return a/b
     } 
 };
