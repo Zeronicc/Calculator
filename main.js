@@ -103,6 +103,7 @@ function deleteLast(){
 };
 
 function allClear(){
+    revertColor();
     answer.textContent = 0;
     num1 = 0;
     num2 = 0;
