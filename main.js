@@ -27,6 +27,10 @@ numKeys.forEach((button) =>
   button.addEventListener('click', (event) => {
     const { target } = event;
     word = answer.textContent;
+    //answer.style.fontSize = '65px';
+    if(word.length > 5 && resettingScreen !== true) answer.style.fontSize = '56px';
+    if(word.length > 6 && resettingScreen !== true) answer.style.fontSize = '49px';
+    if(word.length > 7 && resettingScreen !== true) answer.style.fontSize = '44px';
     if(word.length > 8 && resettingScreen !== true) return;
     if(target.value === ".") return decimalPlace(target.value);
     if(answer.textContent == '-0'){answer.textContent = "-"}
@@ -45,9 +49,9 @@ operateKeys.forEach((button) =>
     operatorClick += 1;
     if(operatorSign !== '' && operatorClick > 1){
         num2 = answer.textContent;
+        equalClick = 0;
         answer.textContent = roundResult(operate(operatorSign, num1, num2));
         resettingScreen = true;
-        equalClick = 0;
         result = roundResult(operate(operatorSign, num1, num2));
         result = result.toString()
         if(result.length > 9){
@@ -69,22 +73,26 @@ equalBtn.addEventListener('click', event => {
     equalBtn.style.color = '#F69906';
     num2 = answer.textContent;
     result = roundResult(operate(operatorSign, num1, num2));
-    result = result.toString()
-    if(result.length > 9){
-        answer.textContent = "Error";
-        return answer.textContent
-    };
+    display = result.toString()
+    if(answer.textContent == "Error") return;
+    if(display.length > 10) {
+        answer.style.fontSize = '65px'
+        return answer.textContent = "Error";
+    }
     answer.textContent = roundResult(operate(operatorSign, num1, num2));
     resettingScreen = true;
+    changeFont(display.length);
     runAgain();
     revertColor();
     equalClick += 1;
     operatorClick = 0;
-    signBtn = equalBtn
+    signBtn = equalBtn;
+    
 });
 
 clearBtn.addEventListener('click', () => {
     answer.textContent = '0';
+    answer.style.fontSize = '65px';
     numberContainer.removeChild(clearBtn);
     numberContainer.prepend(allClearBtn);
     numClick = 0;
@@ -93,6 +101,7 @@ clearBtn.addEventListener('click', () => {
 
 backSpace.addEventListener('click', () =>  {
     display = answer.textContent
+    changeFont(display.length)
     if(answer.textContent === "0" || answer.textContent === "-0") return;
     if(display.length === 1){
         deleteLast();
@@ -131,6 +140,7 @@ function deleteLast(){
 
 function allClear(){
     revertColor();
+    answer.style.fontSize = '65px'
     answer.textContent = 0;
     num1 = 0;
     num2 = 0;
@@ -140,6 +150,7 @@ function allClear(){
 }
 
 function plusMinus(){
+    if(num1 !== 0 && resettingScreen == true) return;
     if(answer.textContent === "0"){
         return answer.textContent = "-0"
     }else if(answer.textContent === "-0"){
@@ -162,8 +173,22 @@ function decimalPlace(decimal){
     
 };
 
+function changeFont(display){
+    if(resettingScreen !== true){
+        if(display == 7 && resettingScreen !== true) answer.style.fontSize = '65px';
+        if(display == 8 && resettingScreen !== true) answer.style.fontSize = '56px';
+        if(display == 9 && resettingScreen !== true) answer.style.fontSize = '49px';
+        if(display == 10 && resettingScreen !== true) answer.style.fontSize = '44px';
+    }else if(resettingScreen == true){
+        if(display == 6) answer.style.fontSize = '65px';
+        if(display == 7) answer.style.fontSize = '56px';
+        if(display == 8) answer.style.fontSize = '49px';
+        if(display == 9) answer.style.fontSize = '44px';
+    }
+}
+
 function roundResult(answer){
-    if(answer !== NaN)return answer;
+    if(answer === "wow ಠ_ಠ")return answer;
     return Math.round( ( answer + Number.EPSILON ) * 10000 ) / 10000
 };
 
@@ -196,19 +221,23 @@ function revertColor(){
         signBtn.style.color = '#F7F7F7';
         }
 };
+
 function operate(operator, a, b){
-    +a;
-    +b;
+    a = Number(a);
+    b = Number(b);
     if(operatorSign === ''){
         a = b;
         return a
     }else if(operator === '+'){
         return a + b
+    }else if(operator === '-' && equalClick > 0){
+        return b - a
     }else if(operator === '-'){
         return a - b
     }else if(operator === 'x'){
         return a * b
     }else if(operator === '÷' && a == 0 || b == 0){
+        answer.style.fontSize = '58px'
         return "wow ಠ_ಠ"
     }else if(operatorSign === '÷' && equalClick > 0){
         return b/a
