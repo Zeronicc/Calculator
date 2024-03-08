@@ -3,7 +3,7 @@
 Live Preview: [Click Here](https://zeronicc.github.io/iPearCalculator/)
 ## Technologies Used
 
-* JavaScript (ES6)
+* JavaScript
 * HTML5
 * CSS3
 
