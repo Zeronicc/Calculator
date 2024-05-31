@@ -1,6 +1,6 @@
 # iPearCalculator
 
-Live Preview: [Click Here](https://zeronicc.github.io/iPearCalculator/)
+Live Preview: [Click Here](https://freddster14.github.io/iPearCalculator/)
 ## Technologies Used
 
 * JavaScript
